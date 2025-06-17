@@ -50,11 +50,14 @@ You can run the tests using either `make` or `pytest` directly.
 
 ```bash
 make test
+```
 
 ### 💡 Option 2: On Windows (without make)
 
+```bash
 pytest integrations/openrouter/tests/ -v
 
 flake8 integrations/openrouter --max-line-length=88 --exclude=__init__.py
 
 black integrations/openrouter
+```
