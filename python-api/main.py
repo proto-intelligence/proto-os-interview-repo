@@ -3,7 +3,10 @@ from fastapi import FastAPI
 import uvicorn
 from app.core.config import settings
 from typing import Dict
+
+#routes
 from app.api.v1.users import routes as users_router
+from app.api.v1.openapi import router as integrations_router
 
 # Create the FastAPI application
 app = FastAPI(
@@ -17,6 +20,14 @@ app = FastAPI(
 
 # Include the users router
 app.include_router(users_router.router, prefix=settings.API_V1_STR + "/users", tags=["users"])
+
+#include the OpenApi router
+app.include_router(
+    integrations_router.router,
+    prefix=settings.API_V1_STR + "/openapi",
+    tags=["OpenRouter"]
+)
+
 
 @app.get("/", tags=["Root"])
 def read_root():
