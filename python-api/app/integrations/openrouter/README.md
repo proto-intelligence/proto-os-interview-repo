@@ -44,6 +44,17 @@ This repository contains a modular, testable, and extensible integration with th
 
 ## 🧪 Running Tests and Dev Tools
 
-### Run all tests
+You can run the tests using either `make` or `pytest` directly.
+
+### ✅ Option 1: Using `make` (Linux/macOS/WSL)
+
 ```bash
 make test
+
+### 💡 Option 2: On Windows (without make)
+
+pytest integrations/openrouter/tests/ -v
+
+flake8 integrations/openrouter --max-line-length=88 --exclude=__init__.py
+
+black integrations/openrouter
