@@ -19,6 +19,9 @@ class Settings(BaseSettings):
     # Security
     SECRET_KEY: str | None = None
     
+    # OpenRouter
+    OPENROUTER_API_KEY: str | None = None
+    
     class Config:
         env_file = ".env"
         case_sensitive = True
