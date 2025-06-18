@@ -1,0 +1,12 @@
+# .coveragerc
+[run]
+omit =
+    app/integrations/google_calendar/tests/*
+    */__init__.py
+    tests/*
+
+[report]
+exclude_lines =
+    pragma: no cover
+    if __name__ == .__main__.:
+    @abstractmethod
