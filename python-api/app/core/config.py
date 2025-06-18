@@ -18,7 +18,17 @@ class Settings(BaseSettings):
     
     # Security
     SECRET_KEY: str | None = None
-    
+
+    # Integrations
+    GOOGLE_CALENDAR_API_URL: str | None = None
+
+    # Logging
+    LOGS_FILE_NAME: str = "app.log"
+    LOGS_FILE_ROTATION: str = "600 MB"
+    LOGS_FILE_SERIALIZE: bool = False
+    LOGS_LEVEL: str = "DEBUG"
+    ENABLE_LOGGING_FILE: bool = True
+
     class Config:
         env_file = ".env"
         case_sensitive = True
