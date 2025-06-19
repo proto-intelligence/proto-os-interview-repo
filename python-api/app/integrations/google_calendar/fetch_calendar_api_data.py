@@ -8,7 +8,6 @@ from urllib3.util import Retry
 from loguru import logger
 # local imports
 from app.core.config import settings
-from app.core.logging import configure_logging
 
 
 # Enable detailed urllib3 logging
