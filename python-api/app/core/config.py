@@ -28,6 +28,9 @@ class Settings(BaseSettings):
     LOGS_FILE_SERIALIZE: bool = False
     LOGS_LEVEL: str = "DEBUG"
     ENABLE_LOGGING_FILE: bool = True
+    
+    # OpenRouter
+    OPENROUTER_API_KEY: str | None = None
 
     class Config:
         env_file = ".env"
