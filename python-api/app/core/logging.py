@@ -22,6 +22,10 @@ class InterceptHandler(logging.Handler):
     Loguru documentation: https://loguru.readthedocs.io/en/stable/overview.html#entirely-compatible-with-standard-logging
     """
     def emit(self, record: logging.LogRecord) -> None:
+        # Omit logs that come from pytest execution
+        if record.name.startswith("pytest") or "pytest" in record.pathname:
+            return
+
         # Get corresponding Loguru level if it exists
         try:
             level = logger.level(record.levelname).name
@@ -80,3 +84,5 @@ def configure_logging():
             )
     except Exception as e:
         logger.error(f"Failed to add log file sink: {e}")
+
+configure_logging()

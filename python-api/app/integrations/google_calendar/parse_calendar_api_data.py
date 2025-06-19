@@ -1,9 +1,8 @@
 import json
 from loguru import logger
-from typing import Optional
-from app.core.logging import configure_logging
+from typing import Optional, Tuple, Dict, Any, List
 from app.integrations.google_calendar.schemas.calendar_metadata_schemas import CalendarMetadataParents, ApiMethod, SchemaResolver
-from typing import Tuple, Dict, Any
+
 
 def load_file_data(json_path: str) -> dict:
     """
@@ -51,7 +50,7 @@ def extract_top_level_attributes(data: dict) -> CalendarMetadataParents:
     )
 
     if not parent_metadata.resources:
-        logger.warning("No resources found in API metadata. Ensure the metadata is correct.")
+        logger.error("No resources found in API metadata. Ensure the metadata is correct.")
         raise ValueError("No resources found in API metadata.")
 
     logger.debug("Extracted top-level attributes from API metadata.")
@@ -108,7 +107,7 @@ def get_api_resources_with_methods(parent_metadata: CalendarMetadataParents) -> 
     logger.debug(f"Found {len(resources_with_methods)} resources with methods.")
     return resources_with_methods
 
-def get_api_method_parameters(method_parameters: dict):
+def get_api_method_parameters(method_parameters: Dict[str, Any]) -> Tuple[List[Dict[str, Any]], List[Dict[str, Any]]]:
     """
     Extracts and categorizes API method parameters into required and optional 
     parameters lists.
@@ -143,8 +142,8 @@ def get_api_method_parameters(method_parameters: dict):
     if not method_parameters:
         return [], []
 
-    required_params = []
-    optional_params = []
+    required_params: List[Dict[str, Any]] = []
+    optional_params: List[Dict[str, Any]] = []
 
     for name, value in method_parameters.items():
         if not isinstance(value, dict):
