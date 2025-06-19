@@ -1,8 +1,8 @@
 # .coveragerc
 [run]
 omit =
-    app/integrations/google_calendar/tests/*
     */__init__.py
+    */tests/*
     tests/*
 
 [report]
