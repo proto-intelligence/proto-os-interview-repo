@@ -6,12 +6,6 @@ import requests
 from requests.adapters import HTTPAdapter
 from urllib3.util import Retry
 from loguru import logger
-# local imports
-from app.core.config import settings
-
-
-# Enable detailed urllib3 logging
-logging.getLogger("urllib3").setLevel(settings.LOGS_LEVEL)
 
 
 def create_retry_strategy() -> Retry:
@@ -181,8 +175,11 @@ def save_api_json_data(data: dict) -> str | None:
 
         with open(filepath, "w") as f:
             json.dump(data, f, indent=2)
+            # allows the file to be available before return
+            f.flush()
+            os.fsync(f.fileno())
 
-        logger.info(f"Google Calendar API metadata saved to {filepath}.")
+        logger.debug(f"Google Calendar API metadata saved on file {filename}.")
         return filepath
     except IOError as file_err:
         logger.error(f"Unexpected error occurred while saving API metadata to file: {file_err}")

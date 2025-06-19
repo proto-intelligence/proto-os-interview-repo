@@ -7,12 +7,24 @@ from app.integrations.google_calendar import fetch_calendar_api_data
 
 def convert_api_methods_to_csv(data: list[ApiMethod]) -> str:
     """
-    Converts a list of ApiMethod schemas (dicts) to a CSV file.
+    Converts a list of ApiMethod objects (endpoints metadata) to a CSV file.
+
+    This function takes a list of ApiMethod instances, processes each object
+    and writes the data to a CSV file.
+    The CSV file is created in /data directory and the file path is returned.
 
     Args:
-        data (list): List of ApiMethod schema dictionaries.
-        output_file (str): Output CSV file path.
+        data (list[ApiMethod]): A list of ApiMethod objects to be exported to CSV.
+
+    Returns:
+        str: The file path to the generated CSV file.
+
+    Raises:
+        ValueError: If the input data list is empty.
+        IOError: If an I/O error occurs while writing the file.
+        Exception: For any other unexpected errors during the CSV conversion process.
     """
+    
     filename = fetch_calendar_api_data.generate_file_name("calendar_api_discovery", "csv")
     filepath = fetch_calendar_api_data.create_directory_if_not_exists(filename)
 
@@ -39,10 +51,10 @@ def convert_api_methods_to_csv(data: list[ApiMethod]) -> str:
                     else:
                         processed_row[key] = value
                 writer.writerow(processed_row)
-        logger.debug(f"{len(data)} API methods were successfully written to CSV at {filepath}")
+        logger.debug(f"{len(data)} API methods were successfully written to CSV {filename}")
         return filepath
     except IOError as ioe:
-        logger.error(f"IO error while writing to {filepath}: {ioe}")
+        logger.error(f"IO error while writing to {filename}: {ioe}")
         raise
     except Exception as err:
         logger.error(f"Unexpected error during CSV conversion: {err}")
