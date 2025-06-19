@@ -85,4 +85,7 @@ def configure_logging():
     except Exception as e:
         logger.error(f"Failed to add log file sink: {e}")
 
+# Enable detailed urllib3 logging
+logging.getLogger("urllib3").setLevel(settings.LOGS_LEVEL)
+
 configure_logging()
