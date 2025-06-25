@@ -58,40 +58,41 @@ def test_fetch_api_data_raises_exception(mock_save, mock_fetch, mock_retry, mock
         fetch_api_data()
 
     assert "session error" in str(excinfo.value)
-    @patch("app.integrations.google_calendar.main_entry_point.load_file_data")
-    @patch("app.integrations.google_calendar.main_entry_point.extract_top_level_attributes")
-    @patch("app.integrations.google_calendar.main_entry_point.SchemaResolver")
-    @patch("app.integrations.google_calendar.main_entry_point.get_api_resources_with_methods")
-    @patch("app.integrations.google_calendar.main_entry_point.get_api_methods")
-    def test_parse_data_success(
-        mock_get_api_methods,
-        mock_get_api_resources_with_methods,
-        mock_schema_resolver,
-        mock_extract_top_level_attributes,
-        mock_load_file_data
-    ):
-        mock_load_file_data.return_value = {"test_key": "test_value"}
-        mock_parent_metadata = MagicMock()
-        mock_extract_top_level_attributes.return_value = mock_parent_metadata
+    
+@patch("app.integrations.google_calendar.main_entry_point.load_file_data")
+@patch("app.integrations.google_calendar.main_entry_point.extract_top_level_attributes")
+@patch("app.integrations.google_calendar.main_entry_point.SchemaResolver")
+@patch("app.integrations.google_calendar.main_entry_point.get_api_resources_with_methods")
+@patch("app.integrations.google_calendar.main_entry_point.get_api_methods")
+def test_parse_data_success(
+    mock_get_api_methods,
+    mock_get_api_resources_with_methods,
+    mock_schema_resolver,
+    mock_extract_top_level_attributes,
+    mock_load_file_data
+):
+    mock_load_file_data.return_value = {"test_key": "test_value"}
+    mock_parent_metadata = MagicMock()
+    mock_extract_top_level_attributes.return_value = mock_parent_metadata
 
-        mock_resolver_instance = MagicMock()
-        mock_schema_resolver.return_value = mock_resolver_instance
+    mock_resolver_instance = MagicMock()
+    mock_schema_resolver.return_value = mock_resolver_instance
 
-        mock_resources_with_methods = MagicMock()
-        mock_get_api_resources_with_methods.return_value = mock_resources_with_methods
+    mock_resources_with_methods = MagicMock()
+    mock_get_api_resources_with_methods.return_value = mock_resources_with_methods
 
-        expected_methods = [MagicMock(), MagicMock()]
-        mock_get_api_methods.return_value = expected_methods
+    expected_methods = [MagicMock(), MagicMock()]
+    mock_get_api_methods.return_value = expected_methods
 
-        result = parse_data("dummy_path.json")
+    result = parse_data("dummy_path.json")
 
-        mock_load_file_data.assert_called_once_with("dummy_path.json")
-        mock_extract_top_level_attributes.assert_called_once_with(mock_load_file_data.return_value)
-        mock_schema_resolver.assert_called_once_with(schemas=mock_parent_metadata.schemas)
-        mock_resolver_instance.resolve_all.assert_called_once()
-        mock_get_api_resources_with_methods.assert_called_once_with(mock_parent_metadata)
-        mock_get_api_methods.assert_called_once_with(mock_resources_with_methods, mock_resolver_instance)
-        assert result == expected_methods
+    mock_load_file_data.assert_called_once_with("dummy_path.json")
+    mock_extract_top_level_attributes.assert_called_once_with(mock_load_file_data.return_value)
+    mock_schema_resolver.assert_called_once_with(schemas=mock_parent_metadata.schemas)
+    mock_resolver_instance.resolve_all.assert_called_once()
+    mock_get_api_resources_with_methods.assert_called_once_with(mock_parent_metadata)
+    mock_get_api_methods.assert_called_once_with(mock_resources_with_methods, mock_resolver_instance)
+    assert result == expected_methods
 
 @patch("app.integrations.google_calendar.main_entry_point.load_file_data")
 @patch("app.integrations.google_calendar.main_entry_point.extract_top_level_attributes")

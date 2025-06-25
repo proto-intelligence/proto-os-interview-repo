@@ -129,7 +129,7 @@ def create_directory_if_not_exists(file_name: str) -> None:
         data_dir = os.path.join(cwd, "data")
         os.makedirs(data_dir, exist_ok=True)
     except OSError as e:
-        raise Exception(f"Failed to create directory {data_dir}: {e}")
+        raise Exception(f"Failed to create directory {data_dir}: {e}") from e
 
     return os.path.join(data_dir, file_name)
 

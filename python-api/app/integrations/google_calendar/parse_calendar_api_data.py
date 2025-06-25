@@ -27,7 +27,7 @@ def load_file_data(json_path: str) -> dict:
     except FileNotFoundError:
         raise FileNotFoundError(f"File not found: {json_path}")
     except json.JSONDecodeError as e:
-        raise ValueError(f"Invalid JSON format in file {json_path}: {e}")
+        raise ValueError(f"Invalid JSON format in file {json_path}: {e}") from e
 
 def extract_top_level_attributes(data: dict) -> CalendarMetadataParents:
     """
