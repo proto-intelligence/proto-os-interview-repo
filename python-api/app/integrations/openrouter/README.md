@@ -36,8 +36,7 @@ This repository contains a modular, testable, and extensible integration with th
 - Logged errors and handled unexpected scenarios gracefully.
 
 ### ✅ **Level 5: Design for Extensibility**
-- Introduced `LLMProviderInterface` to support multiple providers (OpenRouter, OpenAI, Claude, etc.).
-- Implemented a factory method `get_llm_provider()` to allow plug-and-play future integrations.
+- Introduced `LLMProvider` to support multiple providers (OpenRouter, OpenAI, Claude, etc.).
 - Prepared the architecture for centralized rate-limiting/retry/error-handling layers.
 
 ---
@@ -45,19 +44,3 @@ This repository contains a modular, testable, and extensible integration with th
 ## 🧪 Running Tests and Dev Tools
 
 You can run the tests using either `make` or `pytest` directly.
-
-### ✅ Option 1: Using `make` (Linux/macOS/WSL)
-
-```bash
-make test
-```
-
-### 💡 Option 2: On Windows (without make)
-
-```bash
-pytest integrations/openrouter/tests/ -v
-
-flake8 integrations/openrouter --max-line-length=88 --exclude=__init__.py
-
-black integrations/openrouter
-```
